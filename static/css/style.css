@@ -328,14 +328,13 @@ button:active {
         top: 15px;
     }
 }
-
 /* ================================
    🔲 PROGRESS BAR WITH PERCENTAGE
 ================================= */
 .progress-container {
     width: 100%;
     height: 15px;
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* Light background for the progress container */
     border-radius: 8px;
     margin: 5px 0;
     position: relative;
@@ -343,7 +342,7 @@ button:active {
 
 .progress-bar {
     height: 100%;
-    background-color: #4caf50; /* Green color for progress */
+    background-color: #4caf50; /* Green for usage */
     border-radius: 8px;
     position: relative;
 }
@@ -356,11 +355,23 @@ button:active {
     left: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white;
+    color: var(--text-color); /* Dynamic text color to ensure visibility */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1; /* Ensure the label is on top of the bar */
+}
+
+body.dark-mode .progress-container {
+    background-color: #444; /* Darker background for progress container in dark mode */
+}
+
+body.dark-mode .progress-bar {
+    background-color: #81c784; /* Lighter green for dark mode */
+}
+
+body.dark-mode .progress-label {
+    color: var(--text-color); /* Text remains visible in dark mode */
 }
 
 .warning-icon {

@@ -8,12 +8,16 @@ import subprocess
 import threading
 import platform
 import pytz
+from datetime import timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pyipam.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'your_secret_key'  # Required for session management
+
+# Set session timeout to 30 minutes
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)  # Session expires after 30 minutes
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -56,17 +60,15 @@ def index():
 
         subnet.used_percentage = round((used_ips / total_ips) * 100, 2) if total_ips > 0 else 0
 
+        # Check for IP conflicts (IPs that share the same hostname)
         conflicts = db.session.query(IPAddress.hostname).filter_by(subnet_id=subnet.id).group_by(IPAddress.hostname).having(db.func.count(IPAddress.id) > 1).all()
-        subnet.ip_conflict_count = len(conflicts)  # Store the number of conflicts
+        subnet.ip_conflict_count = len(conflicts)  # Add the conflict count as a new attribute
 
     return render_template('index.html', subnets=subnets)
 
 # Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if 'user_id' in session:  # Check if the user is already logged in
-        return redirect(url_for('index'))  # Redirect to index if already logged in
-    
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -75,6 +77,7 @@ def login():
         
         if user and bcrypt.check_password_hash(user.password, password):
             session['user_id'] = user.id
+            session.permanent = True  # Make the session permanent (it will now expire after 30 minutes)
             flash('Login successful!', 'success')
             return redirect(url_for('index'))
         else:
@@ -82,12 +85,14 @@ def login():
     
     return render_template('login.html')
 
+
 # Logout Route
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)  # Remove the user from the session
+    session.pop('user_id', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
 
 # Add Subnet Route
 @app.route('/add_subnet', methods=['POST'])
