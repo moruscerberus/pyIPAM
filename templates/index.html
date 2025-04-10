@@ -19,6 +19,22 @@
 <div class="container">
     <h2>All Subnets</h2>
 
+    <!-- Add Subnet Button -->
+    <button id="addSubnetBtn" class="scan-btn">Add Subnet</button>
+
+    <!-- Add Subnet Form -->
+    <div id="addSubnetForm" style="display:none;">
+        <form action="{{ url_for('add_subnet') }}" method="POST">
+            <label for="cidr">CIDR (e.g., 192.168.1.0/24):</label>
+            <input type="text" id="cidr" name="cidr" placeholder="CIDR" required>
+            
+            <label for="description">Description (optional):</label>
+            <input type="text" id="description" name="description" placeholder="Description">
+
+            <button type="submit" class="scan-btn">Add Subnet</button>
+        </form>
+    </div>
+
     <!-- Subnet List -->
     <table>
         <thead>
@@ -61,8 +77,16 @@
     </table>
 </div>
 
-<!-- JS -->
+<!-- JS for Dark Mode Toggle and Add Subnet Form -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script>
+// Show/Hide Add Subnet Form
+document.getElementById("addSubnetBtn").addEventListener("click", function() {
+    var form = document.getElementById("addSubnetForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+});
+</script>
 
 </body>
 </html>

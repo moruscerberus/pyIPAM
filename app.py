@@ -67,19 +67,26 @@ def view_conflicts(subnet_id):
 @app.route('/add_subnet', methods=['POST'])
 def add_subnet():
     cidr = request.form['cidr']
-    description = request.form.get('description', '')
+    description = request.form.get('description', '')  # Default to empty string if not provided
     try:
+        # Validate and create the IP network from the CIDR
         ip_net = ipaddress.ip_network(cidr, strict=False)
         new_subnet = Subnet(cidr=str(ip_net), description=description)
+        
+        # Add subnet to the database
         db.session.add(new_subnet)
         db.session.commit()
 
+        # Add IP addresses for the subnet
         for ip in ip_net.hosts():
             new_ip = IPAddress(ip=str(ip), subnet=new_subnet)
             db.session.add(new_ip)
 
         db.session.commit()
+
+        # Redirect to the index page to show all subnets
         return redirect(url_for('index'))
+
     except ValueError:
         return "Invalid CIDR", 400
 
