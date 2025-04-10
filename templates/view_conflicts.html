@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP Conflicts for {{ subnet.cidr }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- Dark Mode Toggle -->
+<button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
+<!-- App Header -->
+<header class="app-header">
+    <h1 class="app-title">IP Conflicts for {{ subnet.cidr }}</h1>
+</header>
+
+<div class="container">
+    <h2>Conflicting IPs:</h2>
+    {% if conflicts %}
+        <ul>
+            {% for ip in conflicts %}
+                <li>{{ ip.ip }} ({{ ip.hostname }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No conflicts detected.</p>
+    {% endif %}
+
+    <!-- Back Button -->
+    <a href="{{ url_for('index') }}" class="back-btn">← Back to Subnets</a>
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

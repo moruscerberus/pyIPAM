@@ -10,8 +10,10 @@
     --border-color: #ccc;
     --link-color: #2c7be5;
     --toast-bg: #323232;
-    --button-bg: #e0e0e0;
-    --button-hover: #cfcfcf;
+    --button-bg: #e0e0e0;  /* Gray button color */
+    --button-hover: #cfcfcf;  /* Gray hover effect */
+    --reset-btn-bg: #f44336;
+    --reset-btn-hover: #d32f2f;
 }
 
 body.dark-mode {
@@ -23,8 +25,10 @@ body.dark-mode {
     --border-color: #444;
     --link-color: #5294e2;
     --toast-bg: #222;
-    --button-bg: #3a3a3a;
-    --button-hover: #555;
+    --button-bg: #3a3a3a;  /* Dark mode gray button */
+    --button-hover: #555;  /* Dark mode hover effect */
+    --reset-btn-bg: #f44336;
+    --reset-btn-hover: #d32f2f;
 }
 
 /* ================================
@@ -55,6 +59,31 @@ h2, h3 {
     color: var(--text-color);
     margin-bottom: 15px;
 }
+
+/* ================================
+   🧠 App Title/Header
+================================= */
+.app-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.app-title {
+    font-size: 3rem;  /* Increase font size for scaling */
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.app-subtitle {
+    font-size: 1.2rem;  /* Slightly smaller font for the subtitle */
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 4px 0 0;
+}
+
 
 /* ================================
    🔘 INPUTS & SELECTS
@@ -301,37 +330,96 @@ button:active {
     }
 }
 
-
 /* ================================
-   🧠 App Title/Header
+   🔲 PROGRESS BAR WITH PERCENTAGE
 ================================= */
-.app-header {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+.progress-container {
+    width: 100%;
+    height: 15px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin: 5px 0;
+    position: relative;
 }
 
-.app-title {
-    font-size: 2rem;
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+    border-radius: 8px;
+    position: relative;
+}
+
+.progress-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 12px;
     font-weight: bold;
-    color: var(--text-color);
-    margin: 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* Ensure the label is on top of the bar */
 }
 
-.app-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    opacity: 0.6;
-    margin: 4px 0 0;
+.warning-icon {
+    color: #ff9800;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.warning-icon:hover {
+    color: #e65100;
 }
 
 /* ================================
-   📐 Form Layout in Index
+   🔴 WARNING ICON (Hover Effect)
 ================================= */
-.subnet-form > div {
-    margin-bottom: 12px;
+.warning-icon {
+    font-size: 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
 }
 
-.subnet-form {
-    margin-bottom: 30px;
+.warning-icon:hover {
+    color: #ff5722;
+}
+
+.warning-icon::after {
+    content: " !";
+    color: #f44336;
+}
+
+/* ================================
+   BACK BUTTON (with same styling as other buttons)
+================================= */
+.back-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: var(--button-bg);  /* Same gray button color */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+    text-decoration: none;  /* To make it look like a button */
+}
+
+.back-btn:hover {
+    background-color: var(--button-hover);  /* Same gray hover effect */
+}
+
+.back-btn:active {
+    transform: scale(0.97);  /* Button shrink effect on click */
+}
+
+.back-btn:focus {
+    outline: none;
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
 }

@@ -37,7 +37,32 @@ class IPAddress(db.Model):
 @app.route('/')
 def index():
     subnets = Subnet.query.all()
+
+    for subnet in subnets:
+        total_ips = len(subnet.ips)
+        used_ips = len([ip for ip in subnet.ips if ip.status == 'used'])
+
+        # Calculate percentage of used IPs and round it to 2 decimal places
+        subnet.used_percentage = round((used_ips / total_ips) * 100, 2) if total_ips > 0 else 0
+
+        # Check for IP conflicts (IPs that share the same hostname)
+        conflicts = db.session.query(IPAddress.hostname).filter_by(subnet_id=subnet.id).group_by(IPAddress.hostname).having(db.func.count(IPAddress.id) > 1).all()
+        subnet.ip_conflict = len(conflicts) > 0
+
     return render_template('index.html', subnets=subnets)
+
+
+@app.route('/subnet/<int:subnet_id>/conflicts')
+def view_conflicts(subnet_id):
+    subnet = Subnet.query.get_or_404(subnet_id)
+
+    # Find IP addresses with duplicate hostnames within the same subnet
+    conflicts = db.session.query(IPAddress).filter_by(subnet_id=subnet.id).filter(IPAddress.hostname.in_(
+        db.session.query(IPAddress.hostname).filter_by(subnet_id=subnet.id).group_by(IPAddress.hostname).having(db.func.count(IPAddress.id) > 1)
+    )).all()
+
+    # Return to the view_conflicts page with the conflicting IPs
+    return render_template('view_conflicts.html', subnet=subnet, conflicts=conflicts)
 
 @app.route('/add_subnet', methods=['POST'])
 def add_subnet():

@@ -7,14 +7,14 @@
 </head>
 <body>
 
+<!-- Dark Mode Toggle -->
+<button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
 <!-- App Header -->
 <header class="app-header">
     <h1 class="app-title">pyIPAM</h1>
     <p class="app-subtitle">made by moruscerberus</p>
 </header>
-
-<!-- Dark Mode Toggle -->
-<button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
 
 <div class="container">
     <h2>Subnet: {{ subnet.cidr }}</h2>
@@ -87,6 +87,9 @@
             <a href="{{ url_for('view_subnet', subnet_id=subnet.id, page=paginated_ips.next_num) }}">Next &raquo;</a>
         {% endif %}
     </div>
+
+    <!-- Back Button -->
+    <a href="{{ url_for('index') }}" class="back-btn">← Back to Subnets</a>
 </div>
 
 <!-- JS -->
