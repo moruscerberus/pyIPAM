@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pyIPAM - Subnet Overview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- App Header -->
+<header class="app-header">
+    <h1 class="app-title">pyIPAM</h1>
+    <p class="app-subtitle">made by moruscerberus</p>
+</header>
+
+<!-- Dark Mode Toggle -->
+<button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
+<div class="container">
+    <h2>All Subnets</h2>
+
+    <!-- Add Subnet Form -->
+    <form action="{{ url_for('add_subnet') }}" method="post" class="subnet-form">
+        <div><input type="text" name="cidr" placeholder="CIDR (e.g. 192.168.1.0/24)" required></div>
+        <div><input type="text" name="description" placeholder="Description (optional)"></div>
+        <div><button type="submit">Add Subnet</button></div>
+    </form>
+
+    <!-- Subnet List Table -->
+    {% if subnets %}
+        <table>
+            <thead>
+                <tr>
+                    <th>CIDR</th>
+                    <th>Description</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subnet in subnets %}
+                    <tr>
+                        <td>{{ subnet.cidr }}</td>
+                        <td>{{ subnet.description }}</td>
+                        <td>
+                            <a href="{{ url_for('view_subnet', subnet_id=subnet.id) }}">
+                                🔍 <span style="color: var(--link-color);">View</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No subnets added yet.</p>
+    {% endif %}
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

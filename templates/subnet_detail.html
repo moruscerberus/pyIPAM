@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subnet Detail - {{ subnet.cidr }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- App Header -->
+<header class="app-header">
+    <h1 class="app-title">pyIPAM</h1>
+    <p class="app-subtitle">made by moruscerberus</p>
+</header>
+
+<!-- Dark Mode Toggle -->
+<button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
+<div class="container">
+    <h2>Subnet: {{ subnet.cidr }}</h2>
+
+    <!-- Scan Button -->
+    <form action="{{ url_for('scan_subnet', subnet_id=subnet.id) }}" method="post">
+        <button type="submit" class="scan-btn">Scan Subnet</button>
+    </form>
+
+    <!-- Scan Status -->
+    <div id="scan-status" style="display: none; margin-top: 10px;">
+        <strong>🔍 Scanning...</strong> <span id="current-ip"></span>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" style="display:none;">Scan complete ✅</div>
+
+    <!-- Filters -->
+    <input type="text" id="ip-search" placeholder="Search IP or Hostname..." class="search-box">
+    <select id="status-filter" class="filter-dropdown">
+        <option value="">Filter by status</option>
+        <option value="free">Free</option>
+        <option value="used">Used</option>
+        <option value="reserved">Reserved</option>
+    </select>
+
+    <!-- IP Table -->
+    <h3>IP Addresses</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Hostname</th>
+                <th>Description</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ip in paginated_ips.items %}
+            <tr>
+                <form action="{{ url_for('update_ip', ip_id=ip.id) }}" method="post">
+                    <td>{{ ip.ip }}</td>
+                    <td>
+                        <select name="status">
+                            <option value="free" {% if ip.status == 'free' %}selected{% endif %}>Free</option>
+                            <option value="used" {% if ip.status == 'used' %}selected{% endif %}>Used</option>
+                            <option value="reserved" {% if ip.status == 'reserved' %}selected{% endif %}>Reserved</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="hostname" value="{{ ip.hostname }}"></td>
+                    <td><input type="text" name="description" value="{{ ip.description }}"></td>
+                    <td><button type="submit">Update</button></td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if paginated_ips.has_prev %}
+            <a href="{{ url_for('view_subnet', subnet_id=subnet.id, page=paginated_ips.prev_num) }}">&laquo; Prev</a>
+        {% endif %}
+        Page {{ paginated_ips.page }} of {{ paginated_ips.pages }}
+        {% if paginated_ips.has_next %}
+            <a href="{{ url_for('view_subnet', subnet_id=subnet.id, page=paginated_ips.next_num) }}">Next &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

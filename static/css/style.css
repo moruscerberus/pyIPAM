@@ -1,0 +1,337 @@
+/* ================================
+   🌗 THEME VARIABLES (Light/Dark)
+================================= */
+:root {
+    --bg-color: #f4f6f8;
+    --text-color: #333;
+    --table-bg: #ffffff;
+    --table-header-bg: #f0f0f0;
+    --input-bg: #ffffff;
+    --border-color: #ccc;
+    --link-color: #2c7be5;
+    --toast-bg: #323232;
+    --button-bg: #e0e0e0;
+    --button-hover: #cfcfcf;
+}
+
+body.dark-mode {
+    --bg-color: #181a1b;
+    --text-color: #ddd;
+    --table-bg: #1f1f1f;
+    --table-header-bg: #2c2c2c;
+    --input-bg: #2b2b2b;
+    --border-color: #444;
+    --link-color: #5294e2;
+    --toast-bg: #222;
+    --button-bg: #3a3a3a;
+    --button-hover: #555;
+}
+
+/* ================================
+   ✨ BASE LAYOUT
+================================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: var(--table-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* ================================
+   📝 HEADINGS
+================================= */
+h2, h3 {
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+/* ================================
+   🔘 INPUTS & SELECTS
+================================= */
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 2px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
+}
+
+/* ================================
+   📋 TABLE STYLING
+================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: var(--table-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.4s ease;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+}
+
+thead {
+    background-color: var(--table-header-bg);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.03);
+}
+
+tr:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+
+/* ================================
+   🔍 SEARCH & FILTERS
+================================= */
+.search-box {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+.filter-dropdown {
+    width: 100%;
+    max-width: 200px;
+    padding: 8px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* ================================
+   📄 PAGINATION
+================================= */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 6px 12px;
+    background: var(--button-bg);
+    color: var(--text-color);
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background: var(--button-hover);
+}
+
+/* ================================
+   🔘 BUTTONS
+================================= */
+button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.scan-btn {
+    margin-top: 10px;
+    margin-bottom: 16px;  /* 👈 Add this! */
+}
+
+/* ================================
+   🔔 TOAST MESSAGE
+================================= */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--toast-bg);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    opacity: 0.95;
+    font-size: 14px;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.4s ease;
+    animation: slide-up 0.4s ease;
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================
+   🌙 DARK MODE TOGGLE BUTTON
+================================= */
+.dark-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s, transform 0.2s;
+    z-index: 999;
+}
+
+.dark-toggle:hover {
+    background-color: rgba(255,255,255,0.1);
+    transform: rotate(20deg);
+}
+
+/* ================================
+   📱 MOBILE STYLES
+================================= */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        padding: 10px;
+        background: var(--table-bg);
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .search-box,
+    .filter-dropdown {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .pagination a {
+        display: block;
+        margin: 8px auto;
+    }
+
+    .dark-toggle {
+        right: 15px;
+        top: 15px;
+    }
+}
+
+
+/* ================================
+   🧠 App Title/Header
+================================= */
+.app-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.app-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.app-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 4px 0 0;
+}
+
+/* ================================
+   📐 Form Layout in Index
+================================= */
+.subnet-form > div {
+    margin-bottom: 12px;
+}
+
+.subnet-form {
+    margin-bottom: 30px;
+}
