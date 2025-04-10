@@ -16,6 +16,11 @@
     <p class="app-subtitle">made by moruscerberus</p>
 </header>
 
+<!-- Logout Button -->
+<a href="{{ url_for('logout') }}" class="logout-btn">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+</a>
+
 <div class="container">
     <h2>Subnet: {{ subnet.cidr }}</h2>
 

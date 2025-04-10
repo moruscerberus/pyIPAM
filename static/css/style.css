@@ -84,7 +84,6 @@ h2, h3 {
     margin: 4px 0 0;
 }
 
-
 /* ================================
    🔘 INPUTS & SELECTS
 ================================= */
@@ -422,4 +421,121 @@ button:active {
     outline: none;
     border-color: var(--link-color);
     box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
+}
+
+/* ================================
+   Logout Button Styles
+================================= */
+.logout-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 999;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.logout-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.logout-btn:active {
+    transform: scale(0.97);  /* Shrinks the button when clicked */
+}
+
+.logout-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
+}
+
+
+/* ================================
+   Login Page Specific Styles
+================================= */
+
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: var(--table-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.login-container .form-group {
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: var(--link-color);
+    outline: none;
+}
+
+.login-container .btn {
+    padding: 10px 20px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.login-container .btn:hover {
+    background-color: var(--button-hover);
+}
+
+.login-container .register-link {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.login-container .register-link:hover {
+    text-decoration: underline;
 }

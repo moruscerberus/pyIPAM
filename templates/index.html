@@ -13,6 +13,11 @@
     <p class="app-subtitle">made by moruscerberus</p>
 </header>
 
+<!-- Logout Button -->
+<a href="{{ url_for('logout') }}" class="logout-btn">
+    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+</a>
+
 <!-- Dark Mode Toggle -->
 <button id="darkToggle" class="dark-toggle" title="Toggle Dark Mode">🌙</button>
 
@@ -65,10 +70,10 @@
                 </td>
                 <td>
                     <!-- IP Conflict Warning -->
-                    {% if subnet.ip_conflict %}
-                        <a href="{{ url_for('view_conflicts', subnet_id=subnet.id) }}" class="warning-icon">
-                            ⚠️ IP Conflict Detected!
-                        </a>
+                    {% if subnet.ip_conflict_count > 0 %}
+                    <a href="{{ url_for('view_conflicts', subnet_id=subnet.id) }}" class="warning-icon">
+                        ⚠️ IP Conflict Detected! ({{ subnet.ip_conflict_count }} conflicts)
+                    </a>
                     {% endif %}
                 </td>
             </tr>

@@ -1,3 +1,7 @@
-flask
-flask_sqlalchemy
-APScheduler
+Flask==2.1.1
+Flask-Bcrypt==1.0.0
+apscheduler==3.8.1
+Werkzeug==2.1.1
+pytz
+flask-sqlalchemy==2.5.1
+sqlalchemy==1.4.32  # Ensure compatibility with Flask-SQLAlchemy
