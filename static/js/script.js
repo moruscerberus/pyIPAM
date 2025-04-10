@@ -1,27 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ main.js loaded!');
 
-    // Check if dark mode toggle exists
+    // 🌗 DARK MODE TOGGLE
     const darkToggle = document.getElementById('darkToggle');
     if (darkToggle) {
-        console.log('🌗 darkToggle found');
-    } else {
-        console.log('🌗 darkToggle NOT found');
-    }
-
-    // Ensure the search input and filter dropdown exist
-    const ipSearch = document.getElementById('ip-search');
-    const statusFilter = document.getElementById('status-filter');
-    if (ipSearch && statusFilter) {
-        console.log('🔍 Filter elements found');
-    } else {
-        console.log('🔍 Filter elements NOT found');
-    }
-
-    // 🌗 DARK MODE TOGGLE
-    if (darkToggle) {
+        // Check saved theme preference or use dark mode by default
         const storedTheme = localStorage.getItem('theme');
-        if (storedTheme === 'dark') {
+        if (storedTheme === 'dark' || !storedTheme) {
             document.body.classList.add('dark-mode');
             darkToggle.textContent = '☀️';
         }
@@ -66,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 🔍 SEARCH FILTER (IP or Hostname)
+    const ipSearch = document.getElementById('ip-search');
+    const statusFilter = document.getElementById('status-filter');
+    const resetFiltersButton = document.getElementById('reset-filters');
+
     if (ipSearch || statusFilter) {
         console.log('🔍 Filter elements found');
 
@@ -73,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = document.querySelectorAll('table tbody tr');
             const searchTerm = ipSearch?.value.toLowerCase() || '';
             const statusTerm = statusFilter?.value.toLowerCase() || '';
+            let visibleCount = 0;
 
             rows.forEach(row => {
                 const ip = row.cells[0]?.innerText.toLowerCase();
@@ -82,11 +72,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const matchesSearch = ip.includes(searchTerm) || hostname.includes(searchTerm);
                 const matchesStatus = !statusTerm || status === statusTerm;
 
-                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+                if (matchesSearch && matchesStatus) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
             });
+
+            document.title = `Showing ${visibleCount} results`; // Update page title
         };
 
         if (ipSearch) ipSearch.addEventListener('input', applyFilters);
         if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+
+        // Reset Filters Button - clear search and filter
+        if (resetFiltersButton) {
+            resetFiltersButton.addEventListener('click', () => {
+                ipSearch.value = '';  // Clear the search field
+                statusFilter.value = '';  // Clear the status dropdown
+                applyFilters();  // Reapply filters (this will reset everything)
+            });
+        }
     }
 });
